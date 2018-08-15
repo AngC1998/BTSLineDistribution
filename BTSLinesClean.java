@@ -16,8 +16,8 @@ public class BTSLinesClean {
 		favSongs();
 	}
 	public static void favSongs()throws IOException {
-		String[] playlist = {"MICDrop.txt", "SpringDay.txt", "Run.txt"};
-		String[] titles = {"MIC Drop", "Spring Day", "Run"};
+		String[] playlist = {"MICDrop.txt", "SpringDay.txt", "Run.txt", "WeAreBulletProof2.txt"};
+		String[] titles = {"MIC Drop", "Spring Day", "Run", "We Are Bulletproof Pt. 2"};
 		for(int j = 0; j < playlist.length; j++) {
 			Map<Integer, ArrayList<String>> song = calcLineDistOrder(titles[j], playlist[j]);
 			int k = 7;
