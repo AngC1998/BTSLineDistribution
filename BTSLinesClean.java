@@ -10,11 +10,41 @@ public class BTSLinesClean {
 		System.out.println("Title song distribution: ");
 		System.out.println("***************************");
 		titleSongs();
+		System.out.println();
+		System.out.println("Favorite songs distribution: ");
+		System.out.println("***************************");
+		favSongs();
+	}
+	public static void favSongs()throws IOException {
+		String[] playlist = {"MICDrop.txt", "SpringDay.txt", "Run.txt"};
+		String[] titles = {"MIC Drop", "Spring Day", "Run"};
+		for(int j = 0; j < playlist.length; j++) {
+			Map<Integer, ArrayList<String>> song = calcLineDistOrder(titles[j], playlist[j]);
+			int k = 7;
+			int h = 0;
+			System.out.println("Overall "+titles[j]+" Totals: ");
+			for(Integer i: song.keySet()) {
+				ArrayList<String> names = song.get(i);
+				if(names.size() > 1 && h == (song.size()-1)) {
+					k = 1;
+				}
+				System.out.print(k+") ");
+				for(int m = 0; m < names.size(); m++) {
+					System.out.print(names.get(m));
+					if(m < names.size() - 1)
+						System.out.print(", ");
+				}
+				System.out.println(": "+i);
+				k-=names.size();
+				h++;
+			}
+			System.out.println();
+		}
 	}
 	public static void titleSongs()throws IOException {
 		String[] titleList = {"FakeLove.txt", "DNA.txt", "BloodSweatTears.txt",
-		"INeedU.txt", "Danger.txt", "NoMoreDream.txt"};
-		String[] titles = {"Fake Love", "DNA", "Blood, Sweat, and Tears", "I Need U",
+		"Run.txt", "INeedU.txt", "Danger.txt", "NoMoreDream.txt"};
+		String[] titles = {"Fake Love", "DNA", "Blood, Sweat, and Tears", "Run", "I Need U",
 		"Danger", "No More Dream"};
 		for(int j = 0; j < titleList.length; j++) {
 			Map<Integer, ArrayList<String>> song = calcLineDistOrder(titles[j], titleList[j]);
