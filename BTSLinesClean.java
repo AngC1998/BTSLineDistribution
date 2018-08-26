@@ -16,8 +16,8 @@ public class BTSLinesClean {
 		favSongs();
 	}
 	public static void favSongs()throws IOException {
-		String[] playlist = {"MICDrop.txt", "SpringDay.txt", "Run.txt", "WeAreBulletProof2.txt"};
-		String[] titles = {"MIC Drop", "Spring Day", "Run", "We Are Bulletproof Pt. 2"};
+		String[] playlist = {"AnswerLoveMyself.txt", "I'mFine.txt", "MICDrop.txt", "SpringDay.txt", "Run.txt", "WeAreBulletProof2.txt"};
+		String[] titles = {"Answer: Love Myself", "I'm Fine", "MIC Drop", "Spring Day", "Run", "We Are Bulletproof Pt. 2"};
 		for(int j = 0; j < playlist.length; j++) {
 			Map<Integer, ArrayList<String>> song = calcLineDistOrder(titles[j], playlist[j]);
 			int k = 7;
@@ -42,9 +42,9 @@ public class BTSLinesClean {
 		}
 	}
 	public static void titleSongs()throws IOException {
-		String[] titleList = {"FakeLove.txt", "DNA.txt", "BloodSweatTears.txt",
+		String[] titleList = {"IDOL.txt", "FakeLove.txt", "DNA.txt", "BloodSweatTears.txt",
 		"Run.txt", "INeedU.txt", "Danger.txt", "NoMoreDream.txt"};
-		String[] titles = {"Fake Love", "DNA", "Blood, Sweat, and Tears", "Run", "I Need U",
+		String[] titles = {"IDOL", "Fake Love", "DNA", "Blood, Sweat, and Tears", "Run", "I Need U",
 		"Danger", "No More Dream"};
 		for(int j = 0; j < titleList.length; j++) {
 			Map<Integer, ArrayList<String>> song = calcLineDistOrder(titles[j], titleList[j]);
@@ -70,6 +70,10 @@ public class BTSLinesClean {
 		}
 	}
 	public static void albums()throws IOException {
+		String answer = "LY: Answer";
+		String[] answerList = {"IDOL.txt", "I'mFine.txt", "AnswerLoveMyself.txt"};
+		System.out.println("***Excluding Trivias, Remixes, and Older Releases***");
+		printAlbumTotals(answer, answerList);
 		String tear = "LY: Tear";
 		String[] tearList = {"FakeLove.txt", "TruthUntold.txt", "134340.txt",
 		"Paradise.txt", "LoveMaze.txt", "MagicShop.txt", "AirplanePt2.txt",
@@ -92,18 +96,23 @@ public class BTSLinesClean {
 		printAlbumTotals(wings, wingsListTwo);
 	}
 	public static void printAlbumTotals(String albumName, String[] lyricFiles)throws IOException {
-		Map<Integer, String> albumTotals = calcAlbumTotals(albumName, lyricFiles);
+		Map<Integer, ArrayList<String>> albumTotals = calcAlbumTotals(albumName, lyricFiles);
 		int k = 7;
 		System.out.println("Overall "+albumName+" Totals: ");
 		for(Integer i: albumTotals.keySet()) {
-			String name = albumTotals.get(i);
-			System.out.println(k+") "+name+": "+i);
-			k--;
+			ArrayList<String> names = albumTotals.get(i);
+			for(int j = 0; j < names.size(); j++) {
+				System.out.println(k+") "+names.get(j)+": "+i);
+			}
+			k-=names.size();
 		}
 		System.out.println();
 	}
-	public static Map<Integer, String> calcAlbumTotals(String albumName, String[] lyricFiles)throws IOException {
-		Map<Integer, String> albumTotals = new TreeMap<Integer, String>();
+	public static Map<Integer, ArrayList<String>> calcAlbumTotals(String albumName, String[] lyricFiles)throws IOException {
+		Map<Integer, ArrayList<String>> albumTotals = new TreeMap<Integer, ArrayList<String>>();
+		int[] lineCount = new int[7];
+		String[] members = {"Jungkook", "V", "Jimin", "RM", "JHope", "Suga", "Jin"};
+		/*
 		int jungkookTotal = 0;
 		int vTotal = 0;
 		int jiminTotal = 0;
@@ -111,9 +120,11 @@ public class BTSLinesClean {
 		int jhopeTotal = 0;
 		int sugaTotal = 0;
 		int jinTotal = 0;
+		*/
 		for(int i = 0; i < lyricFiles.length; i++) {
 			String songI = lyricFiles[i];
 			int[] songCount = calcLineDist(songI);
+			/*
 			jungkookTotal += songCount[0];
 			vTotal += songCount[1];
 			jiminTotal += songCount[2];
@@ -121,7 +132,16 @@ public class BTSLinesClean {
 			jhopeTotal += songCount[4];
 			sugaTotal += songCount[5];
 			jinTotal += songCount[6];
+			*/
+			lineCount[0] += songCount[0];
+			lineCount[1] += songCount[1];
+			lineCount[2] += songCount[2];
+			lineCount[3] += songCount[3];
+			lineCount[4] += songCount[4];
+			lineCount[5] += songCount[5];
+			lineCount[6] += songCount[6];
 		}
+		/*
 		albumTotals.put(jungkookTotal, "Jungkook");
 		albumTotals.put(vTotal, "V");
 		albumTotals.put(jiminTotal, "Jimin");
@@ -129,6 +149,20 @@ public class BTSLinesClean {
 		albumTotals.put(jhopeTotal, "JHope");
 		albumTotals.put(sugaTotal, "Suga");
 		albumTotals.put(jinTotal, "Jin");
+		*/
+		for(int i = 0; i < lineCount.length; i++) {
+			int currentCount = lineCount[i];
+			if(albumTotals.containsKey(currentCount)) {
+				ArrayList<String> curMemList = albumTotals.get(currentCount);
+				curMemList.add(members[i]);
+				albumTotals.put(currentCount, curMemList);
+			}
+			else {
+				ArrayList<String> newMemList = new ArrayList<String>();
+				newMemList.add(members[i]);
+				albumTotals.put(currentCount, newMemList);
+			}
+		}
 		return albumTotals;
 	}
 	public static int[] calcLineDist(String inputFile)throws IOException {
