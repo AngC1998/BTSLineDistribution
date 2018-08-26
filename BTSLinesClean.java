@@ -16,8 +16,8 @@ public class BTSLinesClean {
 		favSongs();
 	}
 	public static void favSongs()throws IOException {
-		String[] playlist = {"AnswerLoveMyself.txt", "I'mFine.txt", "MICDrop.txt", "SpringDay.txt", "Run.txt", "WeAreBulletProof2.txt"};
-		String[] titles = {"Answer: Love Myself", "I'm Fine", "MIC Drop", "Spring Day", "Run", "We Are Bulletproof Pt. 2"};
+		String[] playlist = {"I'mFine.txt", "MICDrop.txt", "SpringDay.txt", "Run.txt", "WeAreBulletProof2.txt"};
+		String[] titles = {"I'm Fine", "MIC Drop", "Spring Day", "Run", "We Are Bulletproof Pt. 2"};
 		for(int j = 0; j < playlist.length; j++) {
 			Map<Integer, ArrayList<String>> song = calcLineDistOrder(titles[j], playlist[j]);
 			int k = 7;
@@ -112,27 +112,9 @@ public class BTSLinesClean {
 		Map<Integer, ArrayList<String>> albumTotals = new TreeMap<Integer, ArrayList<String>>();
 		int[] lineCount = new int[7];
 		String[] members = {"Jungkook", "V", "Jimin", "RM", "JHope", "Suga", "Jin"};
-		/*
-		int jungkookTotal = 0;
-		int vTotal = 0;
-		int jiminTotal = 0;
-		int rmTotal = 0;
-		int jhopeTotal = 0;
-		int sugaTotal = 0;
-		int jinTotal = 0;
-		*/
 		for(int i = 0; i < lyricFiles.length; i++) {
 			String songI = lyricFiles[i];
 			int[] songCount = calcLineDist(songI);
-			/*
-			jungkookTotal += songCount[0];
-			vTotal += songCount[1];
-			jiminTotal += songCount[2];
-			rmTotal += songCount[3];
-			jhopeTotal += songCount[4];
-			sugaTotal += songCount[5];
-			jinTotal += songCount[6];
-			*/
 			lineCount[0] += songCount[0];
 			lineCount[1] += songCount[1];
 			lineCount[2] += songCount[2];
@@ -141,15 +123,6 @@ public class BTSLinesClean {
 			lineCount[5] += songCount[5];
 			lineCount[6] += songCount[6];
 		}
-		/*
-		albumTotals.put(jungkookTotal, "Jungkook");
-		albumTotals.put(vTotal, "V");
-		albumTotals.put(jiminTotal, "Jimin");
-		albumTotals.put(rmTotal, "RM");
-		albumTotals.put(jhopeTotal, "JHope");
-		albumTotals.put(sugaTotal, "Suga");
-		albumTotals.put(jinTotal, "Jin");
-		*/
 		for(int i = 0; i < lineCount.length; i++) {
 			int currentCount = lineCount[i];
 			if(albumTotals.containsKey(currentCount)) {
