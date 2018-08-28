@@ -16,11 +16,15 @@ public class BTSLinesClean {
 		favSongs();
 	}
 	public static void favSongs()throws IOException {
-		String[] playlist = {"I'mFine.txt", "MICDrop.txt", "SpringDay.txt", "Run.txt", "WeAreBulletProof2.txt"};
-		String[] titles = {"I'm Fine", "MIC Drop", "Spring Day", "Run", "We Are Bulletproof Pt. 2"};
+		String[] playlist = {"I'mFine.txt", "MICDrop.txt", "SpringDay.txt", "Run.txt", "WeAreBulletProof2.txt", "TruthUntold.txt"};
+		String[] titles = {"I'm Fine", "MIC Drop", "Spring Day", "Run", "We Are Bulletproof Pt. 2", "Truth Untold"};
 		for(int j = 0; j < playlist.length; j++) {
 			Map<Integer, ArrayList<String>> song = calcLineDistOrder(titles[j], playlist[j]);
-			int k = 7;
+			int k = 0;
+			for(Integer i: song.keySet()) {
+				ArrayList<String> names = song.get(i);
+				k += names.size();
+			}
 			int h = 0;
 			System.out.println("Overall "+titles[j]+" Totals: ");
 			for(Integer i: song.keySet()) {
@@ -214,16 +218,19 @@ public class BTSLinesClean {
 		for(int i = 0; i < count.length; i++) {
 			int num = count[i];
 			String name = names[i];
-			if(songTotals.get(num) == null) {
-				ArrayList<String> namesList = new ArrayList<>();
-				namesList.add(name);
-				songTotals.put(num, namesList);
+			if(num > 0) {
+				if(songTotals.get(num) == null) {
+					ArrayList<String> namesList = new ArrayList<>();
+					namesList.add(name);
+					songTotals.put(num, namesList);
+				}
+				else {
+					ArrayList<String> namesList = songTotals.get(num);
+					namesList.add(name);
+					songTotals.put(num, namesList);
+				}
 			}
-			else {
-				ArrayList<String> namesList = songTotals.get(num);
-				namesList.add(name);
-				songTotals.put(num, namesList);
-			}
+
 		}
 		return songTotals;
 	}
